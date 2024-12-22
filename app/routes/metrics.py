@@ -2,10 +2,13 @@
 from fastapi import APIRouter
 from app.services.github_api import get_pull_requests, get_commits
 from app.services.data_analysis import calculate_most_ghosted, calculate_longest_period_of_inactivity
+from pydantic import BaseModel
 
 router = APIRouter()
 
 # HELPER FUNCTIONS
+class MetricsQuery(BaseModel):
+    url: str
 
 
 def fetch_most_ghosted():
@@ -41,9 +44,9 @@ def longest_period_of_inactivity():
 
 # High-level route for web app
 
-
-@router.get("/metrics")
-def get_all_metrics():
+@router.post("/all")
+async def get_all_metrics(data: MetricsQuery):
+    url = data.url # Github URL
     """Returns all metrics as a single JSON object."""
     most_ghosted_contributor = fetch_most_ghosted()
     longest_period_of_inactivity = fetch_longest_period_of_inactivity()
