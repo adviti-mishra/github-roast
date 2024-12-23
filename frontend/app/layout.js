@@ -1,5 +1,6 @@
 import "./globals.css";
 import { Providers } from "./Providers";
+import CustomNavbar from "@/components/CustomNavbar";
 
 export const metadata = {
   title: "Github Roasts",
@@ -12,6 +13,7 @@ export default function RootLayout({ children }) {
       <body
         className={`antialiased`}
       >
+        <CustomNavbar />
         <Providers>
           {children}
         </Providers>
